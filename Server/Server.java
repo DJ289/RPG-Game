@@ -55,6 +55,36 @@ public class Server implements Runnable {
 			sendMessage("set players "+i+" "+players[i].x+" "+players[i].y);
 		}
 	}
+	
+	public boolean wallContainsX(int testX)
+	{
+		for(Wall w:walls)
+		{
+			if(w.isXIn(testX))
+				return true;
+		}
+		return false;
+	}
+	
+	public boolean wallContainsY(int testY)
+	{
+		for(Wall w:walls)
+		{
+			if(w.isYIn(testY))
+				return true;
+		}
+		return false;
+	}
+	
+	public boolean wallContainsPoint(int testX, int testY)
+	{
+		for(Wall w:walls)
+		{
+			if(w.isPointIn(testX,testY))
+				return true;
+		}
+		return false;
+	}
 
 	public void sendMessage(String msg)
 	{
