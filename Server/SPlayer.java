@@ -50,5 +50,10 @@ public class SPlayer {
 	public void step() {
 		x = x + dx;
 		y = y + dy;
+		if(serv.wallContainsPoint(x,y) || serv.wallContainsPoint(x+WIDTH,y) || serv.wallContainsPoint(x,y+HEIGHT) || serv.wallContainsPoint(x+WIDTH,y+HEIGHT))
+		{
+			x -= dx;
+			y -= dy;
+		}
 	}
 }
