@@ -13,6 +13,9 @@ public class SPlayer {
 	// current movement, changed by keyPress and keyRelease
 	public int dx = 0;
 	public int dy = 0;
+	
+	public static final int WIDTH = 16;
+	public static final int HEIGHT = 16;
 
 	public SPlayer(DataInputStream in, DataOutputStream out, Server serv)
 	{
@@ -50,5 +53,10 @@ public class SPlayer {
 	public void step() {
 		x = x + dx;
 		y = y + dy;
+		if(serv.wallContainsPoint(x,y) || serv.wallContainsPoint(x+WIDTH,y) || serv.wallContainsPoint(x,y+HEIGHT) || serv.wallContainsPoint(x+WIDTH,y+HEIGHT))
+		{
+			x -= dx;
+			y -= dy;
+		}
 	}
 }

@@ -5,6 +5,7 @@ public class Server implements Runnable {
 	public static final int FPS = 25;
 	public static final int maxPlayers = 3;
 	public SPlayer[] players;
+	public Wall[] walls;
 
 	public JoinThread jt;
 
@@ -12,6 +13,18 @@ public class Server implements Runnable {
 		players = new SPlayer[0];
 		jt = new JoinThread(this,255);
 		jt.start();
+		setup();
+	}
+	
+	public void setup()
+	{
+		int[] wallX = new int[] {};
+		int[] wallY = new int[] {};
+		walls = new Wall[wallX.length];
+		for(int i=0;i<wallX.length;i++)
+		{
+			walls[i]=new Wall(wallX[i],wallY[i]);
+		}
 	}
 
 	// the server is a thread
@@ -41,6 +54,36 @@ public class Server implements Runnable {
 		{
 			sendMessage("set players "+i+" "+players[i].x+" "+players[i].y);
 		}
+	}
+	
+	public boolean wallContainsX(int testX)
+	{
+		for(Wall w:walls)
+		{
+			if(w.isXIn(testX))
+				return true;
+		}
+		return false;
+	}
+	
+	public boolean wallContainsY(int testY)
+	{
+		for(Wall w:walls)
+		{
+			if(w.isYIn(testY))
+				return true;
+		}
+		return false;
+	}
+	
+	public boolean wallContainsPoint(int testX, int testY)
+	{
+		for(Wall w:walls)
+		{
+			if(w.isPointIn(testX,testY))
+				return true;
+		}
+		return false;
 	}
 
 	public void sendMessage(String msg)
@@ -94,6 +137,17 @@ public class Server implements Runnable {
 	{
 		//Tell everyone about the noob:
 		sendMessage("add players "+newbie.x+" "+newbie.y);
+		
+		//Tell the noob about the walls:
+		for(Wall w: walls)
+		{
+			try {
+				newbie.sendMessage("add walls "+w.getX()+" "+w.getY());
+			}
+			catch(Exception e){
+				System.out.println("Error sending message to new player");
+			}
+		}
 		
 		//Tell the noob about everyone:
 		for(int i=0;i<players.length;i++)

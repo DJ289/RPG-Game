@@ -9,6 +9,11 @@ public class Wall {
 	{
 		this.x=x;		this.y=y;
 	}
+	
+	public int getX()
+	{	return x;	}
+	public int getY()
+	{	return y;	}
 
 	public boolean isPointIn(int testX, int testY)
 	{	//returns if a point is in the wall
