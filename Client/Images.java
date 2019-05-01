@@ -14,7 +14,7 @@ public class Images {
 		pics = new Image[files.length];
 		for(int i=0;i<files.length;i++)
 		{
-			names[i]=files[i].split(".")[0];
+			names[i]=files[i].split("\\.")[0];
 			pics[i]=new ImageIcon("images/"+files[i]).getImage();
 		}
 	}
