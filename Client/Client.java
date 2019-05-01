@@ -10,6 +10,7 @@ public class Client extends JPanel implements Runnable,KeyListener {
 	private DataInputStream in;
 	private DataOutputStream out;
 	private FakeList players;
+	private FakeList walls;
 	
 	private Image pic = (new ImageIcon((Client.class.getClassLoader()).getResource("player.jpg"))).getImage();
 	
@@ -18,6 +19,7 @@ public class Client extends JPanel implements Runnable,KeyListener {
 		this.in = in;
 		this.out = out;
 		players = new FakeList(5,1,this);
+		walls = new FakeList(20,5,this);
 		Thread th = new Thread()
 		{
 			public void run()
@@ -30,7 +32,7 @@ public class Client extends JPanel implements Runnable,KeyListener {
 					}
 					catch(Exception e)
 					{
-						System.out.println("Host disconnected (Error code 1A)");
+						System.out.println("Host disconnected");
 						System.exit(0);
 					}
 					Client.this.parseMessage(s);
@@ -80,16 +82,22 @@ public class Client extends JPanel implements Runnable,KeyListener {
 				{
 					players.list[Integer.parseInt(input[2])].setCords(Integer.parseInt(input[3]),Integer.parseInt(input[4]));
 				}
+				if(input[1].equals("wall") || input[1].equals("walls"))
+					walls.list[Integer.parseInt(input[2])].setCords(Integer.parseInt(input[3]),Integer.parseInt(input[4]));
 			}
 			else if(input[0].equals("add"))
 			{
 				if(input[1].equals("player") || input[1].equals("players"))
 					players.add(new Drawable(Integer.parseInt(input[2]),Integer.parseInt(input[3]),pic));
+				if(input[1].equals("wall") || input[1].equals("walls"))
+					walls.add(new Drawable(Integer.parseInt(input[2]),Integer.parseInt(input[3]),Images.getImage("wall")));
 			}
 			else if(input[0].equals("remove"))
 			{
 				if(input[1].equals("player") || input[1].equals("players"))
 					players.remove(Integer.parseInt(input[2]));
+				if(input[1].equals("wall") || input[1].equals("walls"))
+					walls.remove(Integer.parseInt(input[2]));
 			}
 		}
 		catch(Exception e)
