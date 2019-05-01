@@ -11,10 +11,9 @@ public class Client extends JPanel implements Runnable,KeyListener {
 	private DataOutputStream out;
 	private FakeList players;
 	
-	private Image pic = (new ImageIcon((Client.class.getClassLoader()).getResource("player.jpg"))).getImage();
-	
 	public Client(DataInputStream in, DataOutputStream out)
 	{
+		Images.setUp();
 		this.in = in;
 		this.out = out;
 		players = new FakeList(5,1,this);
@@ -60,7 +59,7 @@ public class Client extends JPanel implements Runnable,KeyListener {
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);	//idk what this does
-		players.paint(g);			//paint everything in players
+		players.paint(g);		//paint everything in players
 	}
 	
 	public void addNotify()
@@ -84,7 +83,7 @@ public class Client extends JPanel implements Runnable,KeyListener {
 			else if(input[0].equals("add"))
 			{
 				if(input[1].equals("player") || input[1].equals("players"))
-					players.add(new Drawable(Integer.parseInt(input[2]),Integer.parseInt(input[3]),pic));
+					players.add(new Drawable(Integer.parseInt(input[2]),Integer.parseInt(input[3]),Images.getImage("player")));
 			}
 			else if(input[0].equals("remove"))
 			{
