@@ -61,6 +61,7 @@ public class Client extends JPanel implements Runnable,KeyListener {
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);	//idk what this does
+		walls.paint(g);			//paint everything in walls
 		players.paint(g);		//paint everything in players
 	}
 	
