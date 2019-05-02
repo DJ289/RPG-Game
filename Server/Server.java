@@ -128,6 +128,11 @@ public class Server implements Runnable {
 				if(key==83 || key==87)	//w or s
 					guy.dy=0;
 			}
+			else if(input[0].equals("click"))
+			{
+				//create projectile
+				//addProjectile(guy,Integer.parseInt(input[1]),Integer.parseInt(input[2]));
+			}
 		}
 		catch(Exception e)
 		{	System.out.println("Caught bad message exception");	}	//debug
